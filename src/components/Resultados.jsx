@@ -2,42 +2,46 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn, SectionLabel, waLink } from "../utils/helpers";
 
-// 👉 PARA ACTUALIZAR TESTIMONIOS: editá este array.
-// Cada testimonio tiene: name, duration, text, before, after, initials
+// 👉 PARA ACTUALIZAR TESTIMONIOS: editá este array
 const TESTIMONIALS = [
   {
-    name: "Martina López",
-    duration: "3 meses · Coaching Online Personalizado",
-    text: "Llevaba años intentando bajar de peso sola. Con Santiago entendí que el problema no era yo, era el método. Bajé 8 kilos y nunca pasé hambre. La diferencia con otros coaches es la disponibilidad constante.",
-    before: "78 kg",
-    after: "70 kg",
-    initials: "ML",
+    name: "Manu",
+    age: "21 años",
+    duration: "6 meses · Hipertrofia",
+    result: "+8 kg · Mayor densidad muscular y mejor postura",
+    text: "Buscaba ganar masa muscular y dejar de verme flaco. Con entrenamiento de fuerza estructurado, progresión de cargas y seguimiento constante logré +8 kg en 6 meses con aumento visible de masa muscular y mejor postura corporal.",
+    collage: "manu",
+    isTomi: false,
   },
   {
-    name: "Juan Rodríguez",
-    duration: "4 meses · Coaching Premium",
-    text: "Trabajo muchas horas y pensé que no tenía tiempo para entrenar. Santiago me armó una rutina de 45 minutos que pude sostener. Los resultados físicos son evidentes, pero el cambio de mentalidad es lo más valioso.",
-    before: "92 kg",
-    after: "80 kg",
-    initials: "JR",
+    name: "Tomi",
+    age: "20 años",
+    duration: "1 año y 6 meses · Hipertrofia",
+    result: "+16 kg · Cambio físico evidente en 18 meses",
+    text: "Empecé con contextura delgada y baja masa muscular. Con planificación a largo plazo, periodización de fuerza e hipertrofia y ajustes en alimentación logré +16 kg en 18 meses. La clave fue la paciencia y el enfoque en el largo plazo.",
+    isTomi: true,
   },
   {
-    name: "Valentina García",
-    duration: "2 meses · Rutina Personalizada Online",
-    text: "Lo que más me sorprendió fue la disponibilidad. Respondía rápido, ajustaba el plan sin que yo lo pidiera. Siento que tengo un coach de verdad, no alguien que me vendió un PDF y desapareció.",
-    before: "—",
-    after: "+5 kg músculo",
-    initials: "VG",
+    name: "Santi",
+    age: "23 años",
+    duration: "6 meses · Pérdida de grasa",
+    result: "−15 kg · Mejor definición y composición corporal",
+    text: "Tenía exceso de grasa corporal y baja condición física. Con entrenamiento de fuerza para preservar masa muscular, déficit calórico controlado y seguimiento semanal logré −15 kg en 6 meses con mejora visible en definición.",
+    collage: "santi",
+    isTomi: false,
   },
   {
-    name: "Nicolás Herrera",
-    duration: "5 meses · Coaching Online Personalizado",
-    text: "Había probado mil rutinas de YouTube. Acá por primera vez alguien analizó mi punto de partida real y me dijo la verdad: necesitaba cambiar mis hábitos, no solo entrenar más fuerte.",
-    before: "Sedentario",
-    after: "Entrena 4×/sem",
-    initials: "NH",
+    name: "Elías",
+    age: "25 años",
+    duration: "5 meses · Pérdida de grasa",
+    result: "−5 kg · Mayor definición y condición general",
+    text: "Buscaba reducir grasa y verme más definido. Con entrenamiento estructurado, control de volumen y progresión, acompañado de ajustes en hábitos, logré −5 kg en 5 meses con mayor definición y mejor condición general.",
+    collage: "elias",
+    isTomi: false,
   },
 ];
+
+const IMG_BASE = "/fotos";
 
 export default function Resultados() {
   const [active, setActive] = useState(0);
@@ -46,22 +50,31 @@ export default function Resultados() {
   const next = () => setActive(a => (a + 1) % TESTIMONIALS.length);
 
   return (
-    <section id="resultados" className="bg-white" style={{ overflow: "hidden" }}>
+    <section id="resultados" style={{ background: "#fff", overflow: "hidden" }}>
       <div className="pad-mobile" style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 24px" }}>
 
         <FadeIn>
           <SectionLabel>Resultados</SectionLabel>
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-12">
-            <h2 className="font-serif font-medium text-neutral-900"
-              style={{ fontSize: "clamp(28px, 7vw, 44px)", lineHeight: 1.1 }}>
+
+          {/* Disclaimer */}
+          <p style={{ fontSize: 13, fontWeight: 300, color: "#a3a3a3", fontStyle: "italic",
+            marginBottom: 28, maxWidth: 620, lineHeight: 1.6 }}>
+            "Resultados logrados mediante entrenamiento personalizado, técnica correcta y constancia. Cada proceso es individual."
+          </p>
+
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end",
+            justifyContent: "space-between", gap: 16, marginBottom: 36 }}>
+            <h2 className="font-serif" style={{ fontSize: "clamp(28px,7vw,44px)",
+              color: "#0a0a0a", fontWeight: 500, lineHeight: 1.1 }}>
               Lo que dicen<br />mis alumnos.
             </h2>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {[prev, next].map((fn, i) => (
                 <button key={i} onClick={fn}
                   aria-label={i === 0 ? "Anterior" : "Siguiente"}
-                  style={{ width: 48, height: 48, border: "1px solid #e5e5e5", background: "transparent",
-                    cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                  style={{ width: 48, height: 48, border: "1px solid #e5e5e5",
+                    background: "transparent", cursor: "pointer",
+                    display: "flex", alignItems: "center", justifyContent: "center",
                     color: "#737373", transition: "all 0.2s" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "#0a0a0a"; e.currentTarget.style.color = "#0a0a0a"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e5e5"; e.currentTarget.style.color = "#737373"; }}>
@@ -81,48 +94,80 @@ export default function Resultados() {
           <motion.div key={active}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="grid-1-mobile testi-gap"
-              style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 48, alignItems: "start" }}>
 
+            {/* Nombre + resultado */}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 16 }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-                  <div style={{ width: 52, height: 52, background: "#0a0a0a", color: "#fff",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "Georgia, serif", fontSize: 17, flexShrink: 0 }}>
-                    {t.initials}
+                <p style={{ fontSize: 18, fontWeight: 600, color: "#0a0a0a" }}>{t.name}</p>
+                <p style={{ fontSize: 12, color: "#a3a3a3", marginTop: 2 }}>{t.age} · {t.duration}</p>
+              </div>
+              <div style={{ marginLeft: "auto", background: "#0a0a0a", padding: "6px 14px" }}>
+                <p style={{ fontSize: 11, color: "#f59e0b", letterSpacing: "0.12em",
+                  textTransform: "uppercase", fontWeight: 600 }}>{t.result}</p>
+              </div>
+            </div>
+
+            {/* Fotos */}
+            {t.isTomi ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 24 }}>
+                <p style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase",
+                  color: "#a3a3a3", marginBottom: 4 }}>Progresión completa — 18 meses</p>
+                <img src={`${IMG_BASE}/collage_tomi_antes.jpg`} alt="Tomi antes"
+                  style={{ width: "100%", display: "block" }} />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                  <div>
+                    <p style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase",
+                      color: "#a3a3a3", marginBottom: 4 }}>Primeros meses</p>
+                    <img src={`${IMG_BASE}/collage_tomi_despues_a.jpg`} alt="Tomi progreso"
+                      style={{ width: "100%", display: "block" }} />
                   </div>
                   <div>
-                    <p style={{ fontWeight: 500, color: "#0a0a0a", fontSize: 14 }}>{t.name}</p>
-                    <p style={{ fontSize: 11, color: "#a3a3a3", marginTop: 2, lineHeight: 1.4 }}>{t.duration}</p>
-                  </div>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  <div style={{ background: "#fafafa", border: "1px solid #f0f0f0", padding: 16 }}>
-                    <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#a3a3a3", marginBottom: 6 }}>Antes</p>
-                    <p className="font-serif" style={{ fontSize: "clamp(18px, 4vw, 22px)", color: "#0a0a0a", fontWeight: 500 }}>{t.before}</p>
-                  </div>
-                  <div style={{ background: "#0a0a0a", padding: 16 }}>
-                    <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#f59e0b", marginBottom: 6 }}>Después</p>
-                    <p className="font-serif" style={{ fontSize: "clamp(18px, 4vw, 22px)", color: "#fff", fontWeight: 500 }}>{t.after}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase",
+                      color: "#f59e0b", marginBottom: 4 }}>Resultado final</p>
+                    <img src={`${IMG_BASE}/collage_tomi_despues_b.jpg`} alt="Tomi resultado"
+                      style={{ width: "100%", display: "block" }} />
                   </div>
                 </div>
               </div>
+            ) : (
+              <img src={`${IMG_BASE}/collage_${t.collage}.jpg`}
+                alt={`${t.name} antes y después`}
+                style={{ width: "100%", display: "block", marginBottom: 24 }} />
+            )}
 
+            {/* Texto + resumen */}
+            <div className="grid-1-mobile testi-gap"
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, alignItems: "start" }}>
               <div>
-                <p className="font-serif" style={{ fontSize: 64, color: "#f0f0f0", lineHeight: 1, userSelect: "none" }}>"</p>
-                <p style={{ color: "#525252", fontWeight: 300, fontSize: "clamp(15px, 3.5vw, 18px)", lineHeight: 1.7, marginTop: -10 }}>
+                <p className="font-serif" style={{ fontSize: 56, color: "#f0f0f0", lineHeight: 1, userSelect: "none" }}>"</p>
+                <p style={{ color: "#525252", fontWeight: 300,
+                  fontSize: "clamp(14px,3.5vw,17px)", lineHeight: 1.7, marginTop: -8 }}>
                   {t.text}
                 </p>
-                <div style={{ display: "flex", gap: 2, marginTop: 20, color: "#f59e0b", fontSize: 17 }}>
+                <div style={{ display: "flex", gap: 2, marginTop: 16, color: "#f59e0b", fontSize: 16 }}>
                   {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
                 </div>
+              </div>
+              <div style={{ background: "#fafafa", padding: 20, borderLeft: "2px solid #f59e0b" }}>
+                <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
+                  color: "#a3a3a3", marginBottom: 12 }}>Resumen</p>
+                {[
+                  { label: "Objetivo",   value: t.duration.split("·")[1]?.trim() },
+                  { label: "Duración",   value: t.duration.split("·")[0]?.trim() },
+                  { label: "Resultado",  value: t.result.split("·")[0]?.trim() },
+                ].map(item => (
+                  <div key={item.label} style={{ marginBottom: 10 }}>
+                    <p style={{ fontSize: 10, color: "#a3a3a3", textTransform: "uppercase", letterSpacing: "0.15em" }}>{item.label}</p>
+                    <p style={{ fontSize: 14, fontWeight: 500, color: "#0a0a0a", marginTop: 2 }}>{item.value}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
         {/* Dots */}
-        <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 32 }}>
+        <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 28 }}>
           {TESTIMONIALS.map((_, i) => (
             <button key={i} onClick={() => setActive(i)} aria-label={`Testimonio ${i + 1}`}
               style={{ height: i === active ? 2 : 1, width: i === active ? 28 : 10,
@@ -132,9 +177,11 @@ export default function Resultados() {
           ))}
         </div>
 
+        {/* CTA */}
         <FadeIn delay={0.25}>
-          <div className="flex flex-wrap items-center justify-between gap-5 mt-14 pt-10"
-            style={{ borderTop: "1px solid #f5f5f5" }}>
+          <div style={{ marginTop: 48, paddingTop: 32, borderTop: "1px solid #f5f5f5",
+            display: "flex", flexWrap: "wrap", alignItems: "center",
+            justifyContent: "space-between", gap: 20 }}>
             <p style={{ color: "#737373", fontWeight: 300, fontSize: 14, maxWidth: 320, lineHeight: 1.6 }}>
               ¿Querés ser el próximo? Un mensaje es todo lo que separa tu antes de tu después.
             </p>
@@ -147,13 +194,11 @@ export default function Resultados() {
                 width: "100%", maxWidth: 320, justifyContent: "center" }}
               onMouseEnter={e => e.currentTarget.style.background = "#262626"}
               onMouseLeave={e => e.currentTarget.style.background = "#0a0a0a"}>
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
               Quiero mi transformación
             </a>
           </div>
         </FadeIn>
+
       </div>
     </section>
   );
