@@ -218,18 +218,21 @@ export default function Resultados() {
                 <p style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase",
                   color: "#a3a3a3", marginBottom: 4 }}>Progresión completa — 18 meses</p>
                 <img src={`${IMG_BASE}/collage_tomi_antes.jpg`} alt="Tomi antes"
+                  loading="lazy"
                   style={{ width: "100%", display: "block" }} />
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                   <div>
                     <p style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase",
                       color: "#a3a3a3", marginBottom: 4 }}>Primeros meses</p>
                     <img src={`${IMG_BASE}/collage_tomi_despues_a.jpg`} alt="Tomi progreso"
+                      loading="lazy"
                       style={{ width: "100%", display: "block" }} />
                   </div>
                   <div>
                     <p style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase",
                       color: "#f59e0b", marginBottom: 4 }}>Resultado final</p>
                     <img src={`${IMG_BASE}/collage_tomi_despues_b.jpg`} alt="Tomi resultado"
+                      loading="lazy"
                       style={{ width: "100%", display: "block" }} />
                   </div>
                 </div>
@@ -237,6 +240,7 @@ export default function Resultados() {
             ) : (
               <img src={`${IMG_BASE}/collage_${t.collage}.jpg`}
                 alt={`${t.name} antes y después`}
+                loading="lazy"
                 style={{ width: "100%", display: "block", marginBottom: 24 }} />
             )}
 
