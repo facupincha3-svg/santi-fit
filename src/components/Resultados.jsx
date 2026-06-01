@@ -152,12 +152,12 @@ export default function Resultados() {
                 <div style={{ position: "relative", overflow: "hidden", minHeight: 360 }}>
                   {t.tomi ? (
                     <div style={{ display: "flex", flexDirection: "column", height: "100%", gap: 2 }}>
-                      <img src={`${IMG_BASE}/collage_tomi_a.jpg`} alt="Tomi antes" loading="lazy"
+                      <img src={`${IMG_BASE}/collage_tomi_antes.jpg`} alt="Tomi antes" loading="lazy"
                         style={{ flex: 1, width: "100%", objectFit: "cover", display: "block" }} />
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, flex: 1 }}>
-                        <img src={`${IMG_BASE}/collage_tomi_da.jpg`} alt="Tomi progreso" loading="lazy"
+                        <img src={`${IMG_BASE}/collage_tomi_despues_a.jpg`} alt="Tomi progreso" loading="lazy"
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                        <img src={`${IMG_BASE}/collage_tomi_db.jpg`} alt="Tomi final" loading="lazy"
+                        <img src={`${IMG_BASE}/collage_tomi_despues_b.jpg`} alt="Tomi final" loading="lazy"
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                       </div>
                     </div>
