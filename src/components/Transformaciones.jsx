@@ -42,7 +42,7 @@ export default function Transformaciones() {
 
   return (
     <section style={{ background: "var(--black)", position: "relative", overflow: "hidden" }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "clamp(64px,8vw,100px) 40px" }}>
+      <div className="trans-section-inner" style={{ maxWidth: 1400, margin: "0 auto", padding: "clamp(64px,8vw,100px) 40px" }}>
 
         <FadeIn>
           <Label light>Prueba social</Label>
@@ -141,8 +141,10 @@ export default function Transformaciones() {
         .trans-track::-webkit-scrollbar { display: none; }
         @media (max-width: 768px) {
           .trans-track { scroll-snap-type: x mandatory !important; }
+          .trans-section-inner { padding-left: 16px !important; padding-right: 0 !important; }
           .trans-card {
-            min-width: 100vw !important;
+            min-width: 92vw !important;
+            margin-right: 8px !important;
             scroll-snap-align: start !important;
             height: 320px !important;
             position: relative !important;
