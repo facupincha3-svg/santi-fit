@@ -138,12 +138,13 @@ export default function Resultados() {
         <div ref={trackRef} onScroll={handleScroll}
           onMouseDown={onMouseDown} onMouseMove={onMouseMove}
           onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
+          className="testi-track"
           style={{ display: "flex", overflowX: "auto", scrollSnapType: "x mandatory",
             scrollBehavior: "smooth", gap: 0, cursor: "grab",
             touchAction: "pan-x", overscrollBehaviorX: "contain",
             scrollbarWidth: "none", msOverflowStyle: "none" }}>
           {TESTI.map((t) => (
-            <div key={t.name} style={{ minWidth: "100%", scrollSnapAlign: "start", padding: "0 1px" }}>
+            <div key={t.name} className="testi-slide" style={{ minWidth: "100vw", scrollSnapAlign: "start", padding: "0 1px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2,
                 border: "1px solid var(--gray2)", background: "var(--gray1)" }}
                 className="testi-card-grid">
@@ -251,8 +252,16 @@ export default function Resultados() {
         </FadeIn>
 
         <style>{`
+          .testi-track::-webkit-scrollbar { display: none; }
           .testi-card-grid { grid-template-columns: 1fr 1fr; }
-          @media (max-width: 768px) { .testi-card-grid { grid-template-columns: 1fr !important; } }
+          @media (max-width: 768px) {
+            .testi-track .testi-slide {
+              min-width: 100vw !important;
+              scroll-snap-align: start !important;
+              padding: 0 !important;
+            }
+            .testi-card-grid { grid-template-columns: 1fr !important; }
+          }
         `}</style>
       </div>
     </section>
