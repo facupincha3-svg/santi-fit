@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { waLink } from "../utils/helpers";
 
 const LINKS = [
-  { label: "Sobre mí",     href: "#sobre-mi"     },
-  { label: "Cómo trabajo", href: "#como-trabajo"  },
-  { label: "Planes",       href: "#planes"        },
-  { label: "Resultados",   href: "#resultados"    },
+  { label: "Sobre mí",   href: "#sobre-mi"    },
+  { label: "Proceso",    href: "#como-trabajo" },
+  { label: "Planes",     href: "#planes"       },
+  { label: "Resultados", href: "#resultados"   },
 ];
 
 export default function Navbar() {
@@ -14,9 +14,9 @@ export default function Navbar() {
   const [open,     setOpen]     = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   useEffect(() => {
@@ -24,95 +24,102 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const handleLink = (e, href) => {
-    e.preventDefault();
-    setOpen(false);
-    setTimeout(() => {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    }, open ? 350 : 0);
+  const go = (e, href) => {
+    e.preventDefault(); setOpen(false);
+    setTimeout(() => document.querySelector(href)?.scrollIntoView({ behavior: "smooth" }), open ? 350 : 0);
   };
 
-  const navBg     = scrolled ? "bg-white/95 backdrop-blur-sm shadow-[0_1px_0_0_#f0f0f0]" : "bg-transparent";
-  const linkColor = scrolled ? "text-neutral-500 hover:text-amber-500" : "text-white/70 hover:text-amber-500";
-  const logoColor = scrolled ? "text-neutral-900" : "text-white";
-  const burgerColor = open ? "#0a0a0a" : (scrolled ? "#0a0a0a" : "#fff");
+  const bg    = scrolled ? "rgba(250,250,248,0.94)" : "transparent";
+  const lc    = scrolled ? "var(--gray3)"           : "rgba(255,255,255,0.6)";
+  const logoC = scrolled ? "var(--black)"           : "#fff";
+  const bgrC  = open ? "var(--black)" : (scrolled ? "var(--black)" : "#fff");
 
   return (
     <>
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
-      >
-        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-          <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className={`text-sm font-bold tracking-[0.18em] uppercase transition-colors duration-300 ${logoColor}`}>
-            SANTINIEVAS<span className="text-amber-500">.FIT</span>
-          </a>
+        initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.9, ease: [0.16,1,0.3,1] }}
+        style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+          height: 64, padding: "0 clamp(20px,4vw,40px)",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: bg, backdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--gray5)" : "none",
+          transition: "background 0.4s, border 0.4s" }}>
 
-          <nav className="hide-mobile flex items-center gap-8">
-            {LINKS.map(link => (
-              <a key={link.href} href={link.href}
-                onClick={e => handleLink(e, link.href)}
-                className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-300 ${linkColor}`}>
-                {link.label}
-              </a>
+        <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 4 }}>
+          <span className="display" style={{ fontSize: 19, fontWeight: 500,
+            letterSpacing: "0.04em", color: logoC, transition: "color 0.4s" }}>Santi Nievas</span>
+          <span style={{ fontSize: 11, color: "var(--amber)", letterSpacing: "0.2em", marginLeft: 2 }}>· FIT</span>
+        </a>
+
+        <nav className="hide-mob" style={{ display: "flex", gap: 36 }}>
+          {LINKS.map(l => (
+            <a key={l.href} href={l.href} onClick={e => go(e, l.href)}
+              style={{ fontSize: 11, fontWeight: 400, letterSpacing: "0.18em",
+                textTransform: "uppercase", color: lc, textDecoration: "none" }}
+              onMouseEnter={e => e.currentTarget.style.color = "var(--amber)"}
+              onMouseLeave={e => e.currentTarget.style.color = lc}
+            >{l.label}</a>
+          ))}
+        </nav>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <a href={waLink("Hola Santiago, me gustaría contactarme.")}
+            target="_blank" rel="noopener noreferrer" className="hide-mob"
+            style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em",
+              textTransform: "uppercase", background: "var(--black)", color: "#fff",
+              padding: "10px 22px", textDecoration: "none" }}
+            onMouseEnter={e => e.currentTarget.style.background = "var(--amber)"}
+            onMouseLeave={e => e.currentTarget.style.background = "var(--black)"}
+          >Contactar</a>
+
+          <button onClick={() => setOpen(v => !v)} className="show-mob"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            style={{ flexDirection: "column", justifyContent: "center", alignItems: "center",
+              width: 44, height: 44, gap: 5, background: "none", border: "none",
+              zIndex: 110, position: "relative" }}>
+            {[
+              { t: open ? "rotate(45deg) translateY(7px)"  : "none", o: 1 },
+              { t: "none", o: open ? 0 : 1 },
+              { t: open ? "rotate(-45deg) translateY(-7px)": "none", o: 1 },
+            ].map((s, i) => (
+              <span key={i} style={{ display: "block", width: 22, height: 1.5,
+                borderRadius: 1, background: bgrC,
+                transform: s.t, opacity: s.o, transition: "all 0.3s" }} />
             ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <a href={waLink("Hola Santiago, me gustaría contactarme con vos.")}
-              target="_blank" rel="noopener noreferrer"
-              className="hide-mobile inline-flex items-center justify-center h-9 px-5 bg-neutral-900 text-white text-[10px] font-semibold tracking-[0.2em] uppercase hover:bg-neutral-700 transition-colors">
-              Contactar
-            </a>
-
-            <button onClick={() => setOpen(v => !v)}
-              aria-label={open ? "Cerrar menú" : "Abrir menú"}
-              className="show-mobile flex-col justify-center items-center w-11 h-11 gap-1.5 bg-transparent border-none cursor-pointer relative z-[60]">
-              {[
-                { transform: open ? "rotate(45deg) translateY(7px)" : "none", opacity: 1 },
-                { transform: "none", opacity: open ? 0 : 1 },
-                { transform: open ? "rotate(-45deg) translateY(-7px)" : "none", opacity: 1 },
-              ].map((s, i) => (
-                <span key={i} style={{ display: "block", width: 22, height: 1.5,
-                  background: burgerColor, borderRadius: 1,
-                  transition: "all 0.25s", transform: s.transform, opacity: s.opacity }} />
-              ))}
-            </button>
-          </div>
+          </button>
         </div>
       </motion.header>
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-white flex flex-col justify-center items-center show-mobile">
-            <nav className="flex flex-col items-center w-full mb-10">
-              {LINKS.map((link, i) => (
-                <motion.a key={link.href} href={link.href}
-                  onClick={e => handleLink(e, link.href)}
-                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + i * 0.07 }}
-                  className="text-2xl font-light tracking-[0.12em] uppercase text-neutral-800 hover:text-amber-500 transition-colors py-4 px-6 w-full text-center border-b border-neutral-100">
-                  {link.label}
-                </motion.a>
-              ))}
-            </nav>
-            <motion.a href={waLink("Hola Santiago, me gustaría contactarme con vos.")}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ position: "fixed", inset: 0, zIndex: 100, background: "var(--white)",
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            {LINKS.map((l, i) => (
+              <motion.a key={l.href} href={l.href} onClick={e => go(e, l.href)}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.08 }}
+                style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28,
+                  fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase",
+                  color: "var(--black)", textDecoration: "none", padding: "14px 0",
+                  width: "100%", textAlign: "center", borderBottom: "1px solid var(--gray5)" }}
+                onMouseEnter={e => e.currentTarget.style.color = "var(--amber)"}
+                onMouseLeave={e => e.currentTarget.style.color = "var(--black)"}
+              >{l.label}</motion.a>
+            ))}
+            <motion.a href={waLink("Hola Santiago, me gustaría contactarme.")}
               target="_blank" rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              className="inline-flex items-center justify-center h-13 px-10 bg-neutral-900 text-white text-xs font-semibold tracking-[0.22em] uppercase hover:bg-neutral-700 transition-colors mx-5 w-[calc(100%-40px)]">
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              style={{ marginTop: 32, fontSize: 10, fontWeight: 600, letterSpacing: "0.22em",
+                textTransform: "uppercase", background: "var(--black)", color: "#fff",
+                padding: "14px 40px", textDecoration: "none", width: "calc(100% - 40px)",
+                textAlign: "center" }}>
               Contactar por WhatsApp
             </motion.a>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-              className="absolute bottom-8 text-xs font-bold tracking-[0.18em] uppercase text-neutral-300">
-              SANTINIEVAS<span className="text-amber-400">.FIT</span>
-            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>

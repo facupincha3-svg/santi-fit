@@ -2,32 +2,26 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 export const WA_NUMBER = "5492215056142";
-export const WA_BASE   = `https://wa.me/${WA_NUMBER}?text=`;
-export const waLink    = (msg) => WA_BASE + encodeURIComponent(msg);
+export const waLink    = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
-export const FadeIn = ({ children, delay = 0, className = "", direction = "up" }) => {
+export const FadeIn = ({ children, delay = 0, y = 28, x = 0 }) => {
   const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-70px" });
-  const y = direction === "up" ? 28 : direction === "down" ? -28 : 0;
-  const x = direction === "left" ? 28 : direction === "right" ? -28 : 0;
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div
-      ref={ref}
+    <motion.div ref={ref}
       initial={{ opacity: 0, y, x }}
       animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+    >{children}</motion.div>
   );
 };
 
-export const SectionLabel = ({ children, light = false }) => (
-  <p className={`text-[10px] font-medium tracking-[0.22em] uppercase flex items-center gap-2 mb-6 select-none ${
-    light ? "text-neutral-500" : "text-neutral-400"
-  }`}>
-    <span className="w-5 h-px bg-amber-500 inline-block flex-shrink-0" />
-    {children}
-  </p>
+export const Label = ({ children, light = false }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+    <span style={{ width: 28, height: 1, background: "var(--amber)", display: "inline-block" }} />
+    <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.3em",
+      textTransform: "uppercase", color: light ? "rgba(255,255,255,0.4)" : "var(--gray3)" }}>
+      {children}
+    </span>
+  </div>
 );

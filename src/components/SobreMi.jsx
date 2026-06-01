@@ -1,73 +1,76 @@
-import { FadeIn, SectionLabel, waLink } from "../utils/helpers";
+import { FadeIn, Label, waLink } from "../utils/helpers";
 
 export default function SobreMi() {
   const stats = [
-    { value: "+500", label: "Alumnos" },
-    { value: "5+",   label: "Años" },
-    { value: "98%",  label: "Satisfacción" },
+    { v: "10+", l: "Años entrenando" },
+    { v: "15+", l: "Alumnos"         },
+    { v: "98%", l: "Satisfacción"    },
   ];
 
   return (
-    <section id="sobre-mi" className="bg-white py-20 md:py-40">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid-1-mobile sobre-gap"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 72, alignItems: "center" }}>
+    <section id="sobre-mi" style={{ background: "var(--white)", position: "relative", overflow: "hidden" }}>
+      <span className="sec-num" style={{ right: -20, top: -20 }}>04</span>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "clamp(64px,8vw,100px) 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 80, alignItems: "center" }}
+          className="col-1">
 
-          {/* Foto */}
-          <FadeIn direction="right">
+          <FadeIn x={-30} y={0}>
             <div style={{ position: "relative", maxWidth: 480, margin: "0 auto", width: "100%" }}>
-              <div style={{ position: "absolute", bottom: -12, right: -12, width: "100%",
-                height: "100%", border: "1px solid rgba(245,158,11,0.25)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", top: 20, left: 20, right: -20, bottom: -20,
+                border: "1px solid rgba(200,151,42,0.2)", pointerEvents: "none" }} />
               <div style={{ position: "relative", overflow: "hidden", aspectRatio: "4/5", background: "#111" }}>
-                {/* 👉 Reemplazar con foto real cuando esté disponible */}
-                <img
-                  src="/fotos/sobre-mi.jpg"
-                  alt="Santiago Nievas"
-                  className="photo-bw"
-                  loading="lazy"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 15%" }}
-                />
+                <img src="/fotos/sobre-mi.jpg" alt="Santiago Nievas" className="bw" loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 15%" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px",
+                  background: "linear-gradient(transparent, rgba(8,8,8,0.8))" }}>
+                  <p className="display" style={{ fontSize: 12, fontWeight: 300, letterSpacing: "0.3em",
+                    textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Coach · La Plata, ARG</p>
+                </div>
               </div>
             </div>
           </FadeIn>
 
-          {/* Copy */}
-          <FadeIn delay={0.1}>
-            <SectionLabel>Sobre mí</SectionLabel>
-            <h2 className="font-serif text-neutral-900 font-medium mb-5"
-              style={{ fontSize: "clamp(28px, 3.5vw, 44px)", lineHeight: 1.1 }}>
-              Soy Santiago<br />Nievas.
+          <FadeIn delay={0.15}>
+            <Label>Sobre mí</Label>
+            <h2 className="display" style={{ fontSize: "clamp(40px,5vw,64px)", fontWeight: 400,
+              lineHeight: 1.05, letterSpacing: "-0.02em", color: "var(--black)", marginBottom: 28 }}>
+              Soy Santiago<br />
+              <em style={{ fontStyle: "italic", color: "var(--gray3)" }}>Nievas.</em>
             </h2>
-            <div className="space-y-4 font-light leading-relaxed"
-              style={{ color: "#737373", fontSize: "clamp(14px, 3.5vw, 16px)", maxWidth: 460 }}>
-              <p>Coach de fitness y nutrición con más de 5 años acompañando personas a transformar su cuerpo sin sacrificar su vida.</p>
-              <p>No trabajo con promesas vacías. Trabajo con diagnósticos reales, planes que se adaptan a tu rutina y el seguimiento necesario para que los resultados lleguen y se queden.</p>
-              <p>Si en algún momento sentiste que el problema eras vos, probablemente el problema era el método.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14,
+              color: "var(--gray3)", fontSize: 15, fontWeight: 400, lineHeight: 1.8, maxWidth: 440 }}>
+              <p>Coach de fitness y nutrición. 5 años acompañando personas que quieren transformarse sin sacrificar su vida.</p>
+              <p>Diagnósticos reales, planes adaptados, seguimiento constante. No desaparezco después del primer mes.</p>
+              <p style={{ color: "var(--gray4)", fontSize: 13, fontStyle: "italic" }}>
+                Si sentiste que el problema eras vos, probablemente era el método.
+              </p>
             </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-8 mt-8 pt-8 border-t border-neutral-100">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 0, marginTop: 36,
+              paddingTop: 36, borderTop: "1px solid var(--gray5)" }}>
               {stats.map((s, i) => (
-                <FadeIn key={s.label} delay={0.2 + i * 0.08}>
-                  <div>
-                    <p className="font-serif font-medium text-neutral-900"
-                      style={{ fontSize: "clamp(22px, 5vw, 28px)" }}>{s.value}</p>
-                    <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mt-1">{s.label}</p>
+                <FadeIn key={s.l} delay={0.25 + i * 0.08}>
+                  <div style={{ paddingRight: 32, marginRight: 32,
+                    borderRight: i < 2 ? "1px solid var(--gray5)" : "none" }}>
+                    <p className="display" style={{ fontSize: "clamp(28px,4vw,40px)",
+                      fontWeight: 400, color: "var(--black)", lineHeight: 1 }}>{s.v}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",
+                      color: "var(--gray4)", marginTop: 6 }}>{s.l}</p>
                   </div>
                 </FadeIn>
               ))}
             </div>
 
-            {/* CTA */}
-            <FadeIn delay={0.45}>
+            <FadeIn delay={0.5}>
               <a href={waLink("Hola Santiago, me gustaría conocer más sobre vos y tu método.")}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 mt-8 px-7 bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 transition-colors"
-                style={{ height: 52, textDecoration: "none", width: "100%", maxWidth: 320, justifyContent: "center" }}>
-                Escribirme por WhatsApp
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                style={{ display: "inline-flex", alignItems: "center", gap: 12, marginTop: 32,
+                  fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase",
+                  color: "var(--black)", textDecoration: "none",
+                  borderBottom: "1px solid var(--black)", paddingBottom: 2 }}
+                onMouseEnter={e => { e.currentTarget.style.color = "var(--amber)"; e.currentTarget.style.borderBottomColor = "var(--amber)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "var(--black)"; e.currentTarget.style.borderBottomColor = "var(--black)"; }}>
+                Escribirme por WhatsApp →
               </a>
             </FadeIn>
           </FadeIn>

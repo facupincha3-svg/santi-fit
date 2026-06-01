@@ -1,220 +1,293 @@
-import { FadeIn, waLink } from "../utils/helpers";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FadeIn, Label, waLink } from "../utils/helpers";
 
 const PLANS = [
   {
-    option: "Opción A",
-    name: "Rutina Personalizada",
-    tagline: "Entrená con orden y criterio",
-    badge: "Pago único",
-    desc: "Un plan de entrenamiento hecho a tu medida para entrenar por tu cuenta con estructura clara.",
-    price: "$30.000",
-    priceNote: "pago único",
-    includes: [
-      "Evaluación inicial",
-      "Rutina personalizada según objetivo y nivel",
-      "Adaptada a gimnasio o casa",
-      "Entrega digital",
+    id: "a", name: "Rutina Personalizada", tag: "Pago único", badge: null, featured: false,
+    price: "$30.000", priceNote: "pago único",
+    desc: "Estructura clara. Entrenás solo, con criterio.",
+    features: [
+      { label: "Rutina personalizada",    val: true  },
+      { label: "Seguimiento semanal",     val: false },
+      { label: "Ajustes del plan",        val: false },
+      { label: "Soporte por WhatsApp",    val: false },
+      { label: "Guía nutricional",        val: false },
+      { label: "Prioridad en respuestas", val: false },
     ],
-    excludes: [
-      "Seguimiento",
-      "Ajustes posteriores",
-      "Guía nutricional",
-      "Correcciones técnicas en video",
-      "Contacto continuo",
-    ],
-    ideal: "querés una estructura clara para entrenar por tu cuenta.",
-    featured: false,
   },
   {
-    option: "Opción B",
-    name: "Coaching Online",
-    tagline: "Entrenamiento con seguimiento real",
-    badge: "Más popular",
-    desc: "Entrenamiento personalizado con acompañamiento real para quienes quieren resultados sin vivir en el gym.",
+    id: "b", name: "Transformación 90 días", tag: "Trimestral", badge: "Más elegido", featured: true,
     prices: [
-      { label: "Mensual", value: "$55.000", note: "/mes" },
-      { label: "Trimestral", value: "$50.000", note: "/mes", recommended: true },
+      { label: "Mensual",    value: "$55.000", rec: false },
+      { label: "Trimestral", value: "$50.000", rec: true  },
     ],
-    includes: [
-      "Entrenamiento personalizado",
-      "Ajustes periódicos según progreso",
-      "Seguimiento semanal",
-      "Guía nutricional básica",
-      "Contacto por mensaje (días hábiles)",
+    desc: "Entrenamiento, nutrición y seguimiento real. 90 días que cambian el resultado.",
+    features: [
+      { label: "Rutina personalizada",    val: true  },
+      { label: "Seguimiento semanal",     val: true  },
+      { label: "Ajustes del plan",        val: true  },
+      { label: "Soporte por WhatsApp",    val: true  },
+      { label: "Guía nutricional",        val: true  },
+      { label: "Prioridad en respuestas", val: false },
     ],
-    excludes: [
-      "Entrenamiento presencial",
-      "Videollamadas semanales",
-      "Ajustes ilimitados",
-      "Respuesta inmediata 24/7",
-      "Plan nutricional clínico",
-    ],
-    ideal: "buscás constancia, orden y acompañamiento.",
-    featured: true,
   },
   {
-    option: "Opción C",
-    name: "Coaching Premium",
-    tagline: "Acompañamiento completo y ajustes constantes",
-    badge: null,
-    desc: "Servicio de mayor nivel para quienes quieren delegar el proceso y no improvisar nada.",
+    id: "c", name: "Premium", tag: "Trimestral / Semestral", badge: null, featured: false,
     prices: [
-      { label: "Trimestral", value: "$85.000", note: "/mes" },
-      { label: "Semestral",  value: "$75.000", note: "/mes", recommended: true },
+      { label: "Trimestral", value: "$85.000", rec: false },
+      { label: "Semestral",  value: "$75.000", rec: true  },
     ],
-    includes: [
-      "Entrenamiento diseñado 100% a tu medida",
-      "Seguimiento cercano y feedback continuo",
-      "Ajustes ilimitados según progreso",
-      "Nutrición guiada integrada al entrenamiento",
-      "Recomendaciones básicas de suplementación",
-      "Prioridad en respuestas",
+    desc: "Máximo nivel. Delegás el proceso, ejecutás el plan.",
+    features: [
+      { label: "Rutina personalizada",    val: true },
+      { label: "Seguimiento semanal",     val: true },
+      { label: "Ajustes del plan",        val: true },
+      { label: "Soporte por WhatsApp",    val: true },
+      { label: "Guía nutricional",        val: true },
+      { label: "Prioridad en respuestas", val: true },
     ],
-    excludes: [
-      "Entrenamiento presencial",
-      "Atención médica o nutrición clínica",
-      "Respuesta inmediata 24/7",
-      "Control de lesiones o rehabilitación",
-    ],
-    ideal: "querés resultados sostenibles con acompañamiento total.",
-    featured: false,
   },
 ];
 
-const PlanCard = ({ plan, delay }) => {
-  const f = plan.featured;
+const COMPARE_ROWS = [
+  "Rutina personalizada",
+  "Seguimiento semanal",
+  "Ajustes del plan",
+  "Soporte por WhatsApp",
+  "Guía nutricional",
+  "Prioridad en respuestas",
+];
+
+const CompareTable = () => {
+  const [openRow, setOpenRow] = useState(null);
   return (
-    <FadeIn delay={delay}>
-      <div style={{
-        position: "relative", display: "flex", flexDirection: "column",
-        height: "100%", padding: "28px 24px",
-        background: f ? "#0a0a0a" : "#fff",
-        border: f ? "2px solid #0a0a0a" : "1px solid #e5e5e5",
-      }}>
-        {/* Badge */}
-        {plan.badge && (
-          <div style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap" }}>
-            <span style={{ background: "#f59e0b", color: "#451a03", fontSize: 9, fontWeight: 600,
-              letterSpacing: "0.18em", textTransform: "uppercase", padding: "3px 10px", display: "inline-block" }}>
-              {plan.badge}
-            </span>
-          </div>
-        )}
-
-        {/* Header */}
-        <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase",
-          color: f ? "#525252" : "#a3a3a3", marginBottom: 10 }}>{plan.option}</p>
-        <h3 style={{ fontSize: "clamp(16px,4vw,18px)", fontWeight: 600,
-          color: f ? "#fff" : "#0a0a0a", lineHeight: 1.3, marginBottom: 4 }}>{plan.name}</h3>
-        <p style={{ fontSize: 13, fontWeight: 500, color: f ? "#d4d4d4" : "#525252", marginBottom: 10 }}>{plan.tagline}</p>
-        <p style={{ fontSize: 12, fontWeight: 300, color: "#737373", lineHeight: 1.6, marginBottom: 20 }}>{plan.desc}</p>
-
-        {/* Precio — único o múltiple */}
-        {plan.price ? (
-          <div style={{ marginBottom: 20 }}>
-            <p className="font-serif" style={{ fontSize: "clamp(28px,7vw,34px)", fontWeight: 500,
-              color: f ? "#fff" : "#0a0a0a", letterSpacing: "-0.5px", lineHeight: 1 }}>{plan.price}</p>
-            <p style={{ fontSize: 11, color: "#a3a3a3", marginTop: 4 }}>{plan.priceNote}</p>
-          </div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
-            {plan.prices.map(p => (
-              <div key={p.label} style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between",
-                padding: "8px 10px", background: f ? "#141414" : "#f9f9f9",
-                border: p.recommended ? "1px solid rgba(245,158,11,0.4)" : "1px solid transparent" }}>
-                <span style={{ fontSize: 11, color: p.recommended ? "#f59e0b" : (f ? "#737373" : "#a3a3a3"),
-                  fontWeight: p.recommended ? 600 : 400, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                  {p.label}{p.recommended ? " ✦" : ""}
-                </span>
-                <span className="font-serif" style={{ fontSize: "clamp(20px,4vw,24px)", fontWeight: 500,
-                  color: f ? "#fff" : "#0a0a0a" }}>
-                  {p.value}<span style={{ fontSize: 11, color: "#a3a3a3", fontFamily: "inherit", fontWeight: 300 }}>{p.note}</span>
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div style={{ height: 1, background: f ? "#1f1f1f" : "#f0f0f0", marginBottom: 16 }} />
-
-        {/* Features */}
-        <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase",
-          color: f ? "#525252" : "#a3a3a3", marginBottom: 10 }}>Qué incluye</p>
-        <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 7, flex: 1, marginBottom: 16 }}>
-          {plan.includes.map(item => (
-            <li key={item} style={{ display: "flex", gap: 8, fontSize: "clamp(12px,3vw,13px)",
-              fontWeight: 300, lineHeight: 1.5, alignItems: "flex-start" }}>
-              <span style={{ color: f ? "#f59e0b" : "#0a0a0a", fontWeight: 600, flexShrink: 0, marginTop: 1 }}>•</span>
-              <span style={{ color: f ? "#d4d4d4" : "#525252" }}>{item}</span>
-            </li>
-          ))}
-          {plan.excludes.map(item => (
-            <li key={item} style={{ display: "flex", gap: 8, fontSize: "clamp(12px,3vw,13px)",
-              fontWeight: 300, lineHeight: 1.5, alignItems: "flex-start" }}>
-              <span style={{ color: "#a3a3a3", flexShrink: 0, marginTop: 1 }}>×</span>
-              <span style={{ color: "#a3a3a3", textDecoration: "line-through" }}>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Ideal si */}
-        <p style={{ fontSize: "clamp(12px,3vw,13px)", fontWeight: 300, color: "#737373",
-          lineHeight: 1.5, marginBottom: 20 }}>
-          <span style={{ fontWeight: 500, color: f ? "#e5e5e5" : "#404040" }}>👉 Ideal si</span> {plan.ideal}
+    <div style={{ marginTop: 64 }}>
+      <FadeIn>
+        <p style={{ fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase",
+          color: "var(--gray4)", marginBottom: 28, display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ width: 20, height: 1, background: "var(--amber)", display: "inline-block" }} />
+          Comparativa de planes
         </p>
+      </FadeIn>
 
-        {/* CTA */}
-        <a href={waLink(`Hola Santiago, me interesa el plan ${plan.name}. ¿Podés darme más información?`)}
-          target="_blank" rel="noopener noreferrer"
-          style={{ display: "flex", alignItems: "center", justifyContent: "center",
-            height: 52, background: f ? "#fff" : "#0a0a0a", color: f ? "#0a0a0a" : "#fff",
-            fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase",
-            textDecoration: "none", transition: "background 0.2s" }}
-          onMouseEnter={e => e.currentTarget.style.background = f ? "#f5f5f5" : "#262626"}
-          onMouseLeave={e => e.currentTarget.style.background = f ? "#fff" : "#0a0a0a"}>
-          Consultar este plan
-        </a>
+      {/* Desktop */}
+      <div className="compare-desktop">
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left", padding: "12px 16px", fontSize: 12, fontWeight: 500,
+                color: "var(--gray4)", letterSpacing: "0.1em",
+                borderBottom: "1px solid var(--gray2)", width: "34%" }}>Característica</th>
+              {PLANS.map(p => (
+                <th key={p.id} style={{ textAlign: "center", padding: "12px 16px",
+                  fontSize: 13, fontWeight: p.featured ? 700 : 500,
+                  color: p.featured ? "var(--amber)" : "rgba(255,255,255,0.6)",
+                  borderBottom: "1px solid var(--gray2)" }}>{p.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARE_ROWS.map((row, i) => (
+              <tr key={row} style={{ background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)" }}>
+                <td style={{ padding: "14px 16px", fontSize: 14, fontWeight: 400,
+                  color: "var(--gray4)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{row}</td>
+                {PLANS.map(p => {
+                  const feat = p.features.find(f => f.label === row);
+                  return (
+                    <td key={p.id} style={{ textAlign: "center", padding: "14px 16px",
+                      borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                      {feat?.val
+                        ? <span style={{ color: "var(--amber)", fontSize: 16 }}>✓</span>
+                        : <span style={{ color: "var(--gray2)", fontSize: 14 }}>—</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </FadeIn>
+
+      {/* Mobile accordion */}
+      <div className="compare-mobile">
+        {PLANS.map((p, pi) => (
+          <div key={p.id} style={{ borderBottom: "1px solid var(--gray2)" }}>
+            <button onClick={() => setOpenRow(openRow === pi ? null : pi)}
+              style={{ width: "100%", display: "flex", alignItems: "center",
+                justifyContent: "space-between", padding: "16px 0",
+                background: "none", border: "none", cursor: "pointer" }}>
+              <span style={{ fontSize: 15, fontWeight: p.featured ? 700 : 500,
+                color: p.featured ? "var(--amber)" : "#fff" }}>{p.name}</span>
+              <svg width="14" height="14" fill="none" stroke="var(--gray4)" strokeWidth={1.5} viewBox="0 0 24 24"
+                style={{ transform: openRow === pi ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <AnimatePresence>
+              {openRow === pi && (
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}
+                  style={{ overflow: "hidden" }}>
+                  <div style={{ paddingBottom: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+                    {p.features.map(f => (
+                      <div key={f.label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.65)" }}>{f.label}</span>
+                        {f.val
+                          ? <span style={{ color: "var(--amber)", fontSize: 15 }}>✓</span>
+                          : <span style={{ color: "var(--gray2)", fontSize: 13 }}>—</span>}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        .compare-mobile { display: none; }
+        @media (max-width: 768px) {
+          .compare-desktop { display: none; }
+          .compare-mobile  { display: block; }
+        }
+      `}</style>
+    </div>
   );
 };
 
 export default function Planes() {
   return (
-    <section id="planes" style={{ background: "#fafafa" }}>
-      <div className="pad-mobile" style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 24px" }}>
+    <section id="planes" style={{ background: "var(--black)", position: "relative", overflow: "hidden" }}>
+      <span className="sec-num" style={{ right: -20, top: -20, color: "rgba(200,151,42,0.04)" }}>05</span>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "clamp(64px,8vw,100px) 40px" }}>
 
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 16 }}>
-              <span style={{ width: 20, height: 1, background: "#f59e0b", display: "inline-block" }} />
-              <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.22em",
-                textTransform: "uppercase", color: "#a3a3a3" }}>Planes</span>
-              <span style={{ width: 20, height: 1, background: "#f59e0b", display: "inline-block" }} />
-            </div>
-            <h2 className="font-serif" style={{ fontSize: "clamp(22px,5vw,40px)", color: "#0a0a0a",
-              fontWeight: 500, lineHeight: 1.2, maxWidth: 520, margin: "0 auto" }}>
-              Entrenamiento online, según tu nivel de compromiso
+          <Label light>Planes</Label>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end",
+            justifyContent: "space-between", gap: 16, marginBottom: "clamp(48px,7vw,72px)" }}>
+            <h2 className="display" style={{ fontSize: "clamp(36px,5vw,60px)", fontWeight: 400,
+              color: "#fff", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+              Invertí en vos.<br />
+              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Elegí tu plan.</em>
             </h2>
+            <p style={{ fontSize: 14, fontWeight: 400, color: "var(--gray4)", maxWidth: 360, lineHeight: 1.7 }}>
+              Tres niveles de compromiso. Todas con seguimiento real.
+            </p>
           </div>
         </FadeIn>
 
-        {/* Cards */}
-        <div className="grid-1-mobile" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)",
-          gap: 12, alignItems: "stretch" }}>
-          {PLANS.map((plan, i) => <PlanCard key={plan.option} plan={plan} delay={0.08 + i * 0.08} />)}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr 1fr",
+          gap: 12, alignItems: "start" }} className="plans-grid">
+          {PLANS.map((p, i) => (
+            <FadeIn key={p.id} delay={i * 0.1}>
+              <div style={{
+                position: "relative",
+                padding: p.featured ? "clamp(28px,3vw,44px)" : "clamp(24px,2.5vw,36px)",
+                background: p.featured ? "var(--gray1)" : "transparent",
+                border: p.featured ? "1px solid var(--amber)" : "1px solid var(--gray2)",
+                boxShadow: p.featured ? "0 0 40px rgba(200,151,42,0.08), 0 0 80px rgba(200,151,42,0.04)" : "none",
+              }}
+                onMouseEnter={e => { if (!p.featured) e.currentTarget.style.borderColor = "var(--gray3)"; }}
+                onMouseLeave={e => { if (!p.featured) e.currentTarget.style.borderColor = "var(--gray2)"; }}>
+
+                {p.featured && <div style={{ position: "absolute", top: 0, left: 0, right: 0,
+                  height: 2, background: "var(--amber)" }} />}
+
+                {p.badge && (
+                  <div style={{ marginBottom: 16 }}>
+                    <span style={{ display: "inline-block", background: "var(--amber)",
+                      color: "var(--black)", fontSize: 9, fontWeight: 700,
+                      letterSpacing: "0.2em", textTransform: "uppercase", padding: "4px 12px" }}>
+                      {p.badge}
+                    </span>
+                  </div>
+                )}
+
+                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.25em",
+                  textTransform: "uppercase", marginBottom: 8,
+                  color: p.featured ? "rgba(255,255,255,0.35)" : "var(--gray3)" }}>{p.tag}</p>
+
+                <h3 className="display" style={{ fontSize: p.featured ? "clamp(20px,2.5vw,26px)" : "clamp(18px,2vw,22px)",
+                  fontWeight: 500, color: "#fff", lineHeight: 1.2, marginBottom: 8 }}>{p.name}</h3>
+
+                <p style={{ fontSize: 13, fontWeight: 300, color: "var(--gray3)",
+                  lineHeight: 1.6, marginBottom: 24 }}>{p.desc}</p>
+
+                {p.price ? (
+                  <div style={{ marginBottom: 28 }}>
+                    <p className="display" style={{ fontSize: p.featured ? "clamp(32px,4vw,44px)" : "clamp(28px,3vw,36px)",
+                      fontWeight: 400, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1 }}>{p.price}</p>
+                    <p style={{ fontSize: 11, color: "var(--gray4)", marginTop: 4 }}>{p.priceNote}</p>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 28 }}>
+                    {p.prices.map(pr => (
+                      <div key={pr.label} style={{ display: "flex", alignItems: "baseline",
+                        justifyContent: "space-between", padding: "8px 12px",
+                        background: pr.rec ? (p.featured ? "rgba(200,151,42,0.1)" : "rgba(200,151,42,0.06)") : "rgba(255,255,255,0.03)",
+                        border: pr.rec ? "1px solid rgba(200,151,42,0.3)" : "1px solid transparent" }}>
+                        <span style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase",
+                          color: pr.rec ? "var(--amber)" : "var(--gray4)", fontWeight: pr.rec ? 600 : 400 }}>
+                          {pr.label}{pr.rec ? " ✦" : ""}
+                        </span>
+                        <span className="display" style={{ fontSize: p.featured ? "clamp(22px,3vw,28px)" : "clamp(18px,2.5vw,24px)",
+                          fontWeight: 400, color: "#fff", letterSpacing: "-0.01em" }}>
+                          {pr.value}<span style={{ fontSize: 11, color: "var(--gray4)", fontFamily: "inherit", fontWeight: 300 }}>/mes</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div style={{ height: 1, background: p.featured ? "rgba(255,255,255,0.08)" : "var(--gray2)", marginBottom: 20 }} />
+
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+                  {p.features.map(f => (
+                    <li key={f.label} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14, fontWeight: 400 }}>
+                      <span style={{ fontSize: f.val ? 14 : 13, color: f.val ? "var(--amber)" : "var(--gray2)",
+                        flexShrink: 0, width: 16, textAlign: "center" }}>{f.val ? "✓" : "—"}</span>
+                      <span style={{ color: f.val ? "rgba(255,255,255,0.7)" : "var(--gray3)" }}>{f.label}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a href={waLink(`Hola Santiago, me interesa el plan ${p.name}. ¿Podés darme más información?`)}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center",
+                    height: p.featured ? 52 : 46, background: p.featured ? "var(--amber)" : "transparent",
+                    border: p.featured ? "none" : "1px solid var(--gray2)",
+                    color: p.featured ? "var(--black)" : "rgba(255,255,255,0.5)",
+                    fontSize: 10, fontWeight: p.featured ? 700 : 500,
+                    letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}
+                  onMouseEnter={e => {
+                    if (p.featured) { e.currentTarget.style.background = "#e5b040"; }
+                    else { e.currentTarget.style.borderColor = "var(--amber)"; e.currentTarget.style.color = "var(--amber)"; }
+                  }}
+                  onMouseLeave={e => {
+                    if (p.featured) { e.currentTarget.style.background = "var(--amber)"; }
+                    else { e.currentTarget.style.borderColor = "var(--gray2)"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }
+                  }}>
+                  {p.featured ? "Quiero transformarme →" : "Consultar este plan"}
+                </a>
+              </div>
+            </FadeIn>
+          ))}
         </div>
 
-        {/* Disclaimer legal */}
+        <CompareTable />
+
         <FadeIn delay={0.4}>
-          <p style={{ textAlign: "center", color: "#b0b0b0", fontSize: 11,
-            fontWeight: 300, marginTop: 32, maxWidth: 600, margin: "32px auto 0",
-            lineHeight: 1.6 }}>
+          <p style={{ textAlign: "center", color: "var(--gray3)", fontSize: 11, fontWeight: 300,
+            marginTop: 40, maxWidth: 560, margin: "40px auto 0", lineHeight: 1.6, fontStyle: "italic" }}>
             El servicio no reemplaza asesoramiento médico o nutricional clínico.
-            Las recomendaciones se adaptan al contexto del entrenamiento y objetivo físico.
           </p>
         </FadeIn>
 
+        <style>{`
+          @media (max-width: 768px) { .plans-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
       </div>
     </section>
   );
