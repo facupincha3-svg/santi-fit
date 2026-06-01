@@ -179,6 +179,7 @@ export default function Hero() {
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}
+        className="hero-scroll"
         style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity }}
@@ -213,6 +214,7 @@ export default function Hero() {
             object-fit: cover !important;
             object-position: center top !important;
           }
+          .hero-scroll { display: none !important; }
         }
       `}</style>
     </section>
