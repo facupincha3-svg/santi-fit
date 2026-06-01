@@ -17,11 +17,12 @@ const PLANS = [
     ],
   },
   {
-    id: "b", name: "Transformación 90 días", tag: "Trimestral", badge: "Más elegido", featured: true,
+    id: "b", name: "Coaching Online", tag: "Trimestral", badge: "🔥 PROGRAMA RECOMENDADO", featured: true,
     prices: [
-      { label: "Mensual",    value: "$55.000", rec: false },
-      { label: "Trimestral", value: "$50.000", rec: true  },
+      { label: "Mensual",                        value: "$55.000", rec: false },
+      { label: "Trimestral ✦ Ahorrás $15.000",   value: "$50.000", rec: true  },
     ],
+    saving: "Ahorrás $15.000 eligiendo el plan trimestral",
     desc: "Entrenamiento, nutrición y seguimiento real. 90 días que cambian el resultado.",
     features: [
       { label: "Rutina personalizada",    val: true  },
@@ -230,7 +231,7 @@ export default function Planes() {
                         border: pr.rec ? "1px solid rgba(200,151,42,0.3)" : "1px solid transparent" }}>
                         <span style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase",
                           color: pr.rec ? "var(--amber)" : "var(--gray4)", fontWeight: pr.rec ? 600 : 400 }}>
-                          {pr.label}{pr.rec ? " ✦" : ""}
+                          {pr.label}
                         </span>
                         <span className="display" style={{ fontSize: p.featured ? "clamp(22px,3vw,28px)" : "clamp(18px,2.5vw,24px)",
                           fontWeight: 400, color: "#fff", letterSpacing: "-0.01em" }}>
@@ -238,6 +239,11 @@ export default function Planes() {
                         </span>
                       </div>
                     ))}
+                    {p.saving && (
+                      <p style={{ fontSize: 11, color: "var(--amber)", fontWeight: 600, marginTop: 6 }}>
+                        {p.saving}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -269,7 +275,7 @@ export default function Planes() {
                     if (p.featured) { e.currentTarget.style.background = "var(--amber)"; }
                     else { e.currentTarget.style.borderColor = "var(--gray2)"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }
                   }}>
-                  {p.featured ? "Quiero transformarme →" : "Consultar este plan"}
+                  {p.featured ? "Quiero transformarme →" : "Empezar ahora"}
                 </a>
               </div>
             </FadeIn>

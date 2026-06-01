@@ -49,7 +49,7 @@ export default function Navbar() {
         <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 4 }}>
           <span className="display" style={{ fontSize: 19, fontWeight: 500,
-            letterSpacing: "0.04em", color: logoC, transition: "color 0.4s" }}>Santi Nievas</span>
+            letterSpacing: "0.04em", color: logoC, transition: "color 0.4s" }}>SANTI NIEVAS</span>
           <span style={{ fontSize: 11, color: "var(--amber)", letterSpacing: "0.2em", marginLeft: 2 }}>· FIT</span>
         </a>
 

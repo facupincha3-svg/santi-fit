@@ -82,8 +82,8 @@ export default function App() {
         <Transformaciones />
         <PorQueFunciona />
         <ComoTrabajamos />
-        <SobreMi />
         <Planes />
+        <SobreMi />
         <Resultados />
         <FAQ />
         <CTAFinal />

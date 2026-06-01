@@ -53,9 +53,9 @@ export default function Hero() {
           <div className="display" style={{ fontSize: "clamp(44px,5.5vw,80px)", fontWeight: 300,
             color: "#fff", lineHeight: 1.0, letterSpacing: "-0.02em", marginBottom: 20 }}>
             {[
-              { text: "Transformá tu cuerpo.", italic: false },
-              { text: "Sin dejar de vivir",    italic: true  },
-              { text: "tu vida.",              italic: false },
+              { text: "Ganá músculo con un plan", italic: false },
+              { text: "diseñado para vos.",       italic: true  },
+              { text: "Sin improvisar.",          italic: false },
             ].map((line, i) => (
               <div key={i} style={{ overflow: "hidden" }}>
                 <motion.div initial={{ y: "105%" }} animate={{ y: 0 }}
@@ -79,10 +79,10 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 1.3 }}
             style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, marginBottom: 40 }}>
             {[
-              "Plan de entrenamiento 100% personalizado",
-              "Seguimiento semanal y ajustes continuos",
-              "Guía nutricional integrada al proceso",
-              "Soporte directo por WhatsApp",
+              "Sin rutinas genéricas.",
+              "Sin improvisar.",
+              "Con seguimiento real.",
+              "Soporte directo por WhatsApp.",
             ].map((b, i) => (
               <li key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ width: 5, height: 5, borderRadius: "50%",

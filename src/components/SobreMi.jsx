@@ -4,7 +4,6 @@ export default function SobreMi() {
   const stats = [
     { v: "10+", l: "Años entrenando" },
     { v: "15+", l: "Alumnos"         },
-    { v: "98%", l: "Satisfacción"    },
   ];
 
   return (
@@ -39,11 +38,9 @@ export default function SobreMi() {
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 14,
               color: "var(--gray3)", fontSize: 15, fontWeight: 400, lineHeight: 1.8, maxWidth: 440 }}>
-              <p>Coach de fitness y nutrición. 5 años acompañando personas que quieren transformarse sin sacrificar su vida.</p>
-              <p>Diagnósticos reales, planes adaptados, seguimiento constante. No desaparezco después del primer mes.</p>
-              <p style={{ color: "var(--gray4)", fontSize: 13, fontStyle: "italic" }}>
-                Si sentiste que el problema eras vos, probablemente era el método.
-              </p>
+              <p>Entrenador online especializado en hipertrofia y transformación física.</p>
+              <p>Ayudo a personas a ganar músculo, mejorar su físico y dejar de entrenar sin dirección mediante entrenamiento personalizado y seguimiento real.</p>
+              <p style={{ color: "var(--gray4)", fontSize: 13, fontStyle: "italic" }}>Cuando el proceso requiere una planificación alimentaria específica, trabajo junto a una nutricionista para ofrecer un acompañamiento más completo.</p>
             </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 0, marginTop: 36,
@@ -51,7 +48,7 @@ export default function SobreMi() {
               {stats.map((s, i) => (
                 <FadeIn key={s.l} delay={0.25 + i * 0.08}>
                   <div style={{ paddingRight: 32, marginRight: 32,
-                    borderRight: i < 2 ? "1px solid var(--gray5)" : "none" }}>
+                    borderRight: i < 1 ? "1px solid var(--gray5)" : "none" }}>
                     <p className="display" style={{ fontSize: "clamp(28px,4vw,40px)",
                       fontWeight: 400, color: "var(--black)", lineHeight: 1 }}>{s.v}</p>
                     <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase",

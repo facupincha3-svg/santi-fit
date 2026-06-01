@@ -10,7 +10,7 @@ const FAQS = [
   { q: "¿El plan incluye nutrición?",
     a: "Depende del plan. La Rutina Personalizada no incluye nutrición. El Coaching Online incluye guía nutricional básica. El Premium incluye nutrición guiada integrada al entrenamiento." },
   { q: "¿Cómo funciona el seguimiento?",
-    a: "Por WhatsApp en días hábiles. Revisamos tus métricas y avances semanalmente. Si algo no está funcionando, ajustamos el plan. No desaparezco después de mandarte el PDF." },
+    a: "El seguimiento se realiza por WhatsApp durante los días hábiles. Revisamos avances, métricas y sensaciones de forma periódica para asegurarnos de que el plan siga funcionando. Tu entrenamiento se gestiona mediante una planificación personalizada en Google Sheets, donde vas a tener acceso a tu progreso, ajustes y actualizaciones de forma organizada. Si algo no está funcionando, se modifica. La idea es acompañarte durante el proceso, no entregarte una rutina y desaparecer." },
   { q: "¿Puedo entrenar en casa?",
     a: "Sí, completamente. El plan se diseña específicamente para tu espacio y equipamiento disponible. Con bandas, mancuernas, peso corporal o lo que tengas a mano." },
   { q: "¿Cuándo recibo la rutina?",
