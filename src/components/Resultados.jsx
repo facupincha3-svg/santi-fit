@@ -140,6 +140,7 @@ export default function Resultados() {
           onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
           style={{ display: "flex", overflowX: "auto", scrollSnapType: "x mandatory",
             scrollBehavior: "smooth", gap: 0, cursor: "grab",
+            touchAction: "pan-x", overscrollBehaviorX: "contain",
             scrollbarWidth: "none", msOverflowStyle: "none" }}>
           {TESTI.map((t) => (
             <div key={t.name} style={{ minWidth: "100%", scrollSnapAlign: "start", padding: "0 1px" }}>

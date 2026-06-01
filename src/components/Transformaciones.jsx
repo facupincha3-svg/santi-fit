@@ -66,6 +66,7 @@ export default function Transformaciones() {
             onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
             style={{ display: "flex", overflowX: "auto", scrollSnapType: "x mandatory",
               scrollBehavior: "smooth", gap: 2, cursor: "grab",
+              touchAction: "pan-x", overscrollBehaviorX: "contain",
               scrollbarWidth: "none", msOverflowStyle: "none" }}>
             {TRANSFORMS.map((t) => (
               <div key={t.name} style={{ minWidth: "clamp(280px,40vw,480px)",
