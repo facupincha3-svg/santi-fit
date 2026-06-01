@@ -138,10 +138,24 @@ export default function Transformaciones() {
         </FadeIn>
       </div>
       <style>{`
+        .trans-track::-webkit-scrollbar { display: none; }
         @media (max-width: 768px) {
           .trans-track { scroll-snap-type: x mandatory !important; }
-          .trans-card { min-width: 100vw !important; scroll-snap-align: start !important; }
-          .trans-card img { max-height: 320px; object-fit: cover; object-position: top; width: 100%; display: block; }
+          .trans-card {
+            min-width: 100vw !important;
+            scroll-snap-align: start !important;
+            height: 320px !important;
+            position: relative !important;
+            overflow: hidden !important;
+          }
+          .trans-card img {
+            position: absolute !important;
+            top: 0; left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: top !important;
+          }
         }
       `}</style>
     </section>
