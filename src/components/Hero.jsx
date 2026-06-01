@@ -195,20 +195,23 @@ export default function Hero() {
           }
           .hero-media {
             order: -1;
-            max-height: 240px;
-            overflow: hidden;
+            min-height: 420px !important;
+            max-height: 520px !important;
           }
           .hero-media > div {
             max-width: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 420px;
             padding: 0 !important;
           }
           .hero-media img, .hero-media video {
-            aspect-ratio: 16/9 !important;
-            object-position: center 20% !important;
-            max-height: 240px;
-          }
-          .hero-media > div > div:last-child {
-            display: none !important;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 420px;
+            aspect-ratio: unset !important;
+            object-fit: cover !important;
+            object-position: center top !important;
           }
         }
       `}</style>
