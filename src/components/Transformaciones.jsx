@@ -64,6 +64,7 @@ export default function Transformaciones() {
           <div ref={trackRef} onScroll={handleScroll}
             onMouseDown={onMouseDown} onMouseMove={onMouseMove}
             onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
+            className="trans-track"
             style={{ display: "flex", overflowX: "auto", scrollSnapType: "x mandatory",
               scrollBehavior: "smooth", gap: 2, cursor: "grab",
               touchAction: "pan-x", overscrollBehaviorX: "contain",
@@ -137,13 +138,10 @@ export default function Transformaciones() {
         </FadeIn>
       </div>
       <style>{`
-        div::-webkit-scrollbar { display: none; }
         @media (max-width: 768px) {
-          .trans-card img {
-            max-height: 280px;
-            object-fit: cover;
-            object-position: top;
-          }
+          .trans-track { scroll-snap-type: x mandatory !important; }
+          .trans-card { min-width: 100vw !important; scroll-snap-align: start !important; }
+          .trans-card img { max-height: 320px; object-fit: cover; object-position: top; width: 100%; display: block; }
         }
       `}</style>
     </section>
