@@ -69,7 +69,7 @@ export default function Transformaciones() {
               touchAction: "pan-x", overscrollBehaviorX: "contain",
               scrollbarWidth: "none", msOverflowStyle: "none" }}>
             {TRANSFORMS.map((t) => (
-              <div key={t.name} style={{ minWidth: "clamp(280px,40vw,480px)",
+              <div key={t.name} className="trans-card" style={{ minWidth: "clamp(280px,40vw,480px)",
                 scrollSnapAlign: "start", position: "relative",
                 overflow: "hidden", background: "var(--gray1)", flexShrink: 0 }}
                 onMouseEnter={e => {
@@ -136,7 +136,16 @@ export default function Transformaciones() {
           </div>
         </FadeIn>
       </div>
-      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
+      <style>{`
+        div::-webkit-scrollbar { display: none; }
+        @media (max-width: 768px) {
+          .trans-card img {
+            max-height: 280px;
+            object-fit: cover;
+            object-position: top;
+          }
+        }
+      `}</style>
     </section>
   );
 }
