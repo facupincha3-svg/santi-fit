@@ -3,9 +3,9 @@ import { FadeIn, Label } from "../utils/helpers";
 
 const TRANSFORMS = [
   { name: "Manu",           time: "6 meses",        result: "+8 kg",  obj: "Hipertrofia",          col: "manu"    },
-  { name: "Tomi — Antes",   time: "Punto de inicio", result: "Base",   obj: "Hipertrofia",          col: "tomi_a"  },
-  { name: "Tomi — Progreso",time: "Primeros meses",  result: "+8 kg",  obj: "Hipertrofia en curso", col: "tomi_da" },
-  { name: "Tomi — Final",   time: "18 meses",        result: "+16 kg", obj: "Resultado final",      col: "tomi_db" },
+  { name: "Tomi — Antes",   time: "Punto de inicio", result: "Base",   obj: "Hipertrofia",          col: "tomi_antes"     },
+  { name: "Tomi — Progreso",time: "Primeros meses",  result: "+8 kg",  obj: "Hipertrofia en curso", col: "tomi_despues_a" },
+  { name: "Tomi — Final",   time: "18 meses",        result: "+16 kg", obj: "Resultado final",      col: "tomi_despues_b" },
   { name: "Santi",          time: "6 meses",         result: "−15 kg", obj: "Pérdida de grasa",     col: "santi"   },
   { name: "Elías",          time: "5 meses",         result: "−5 kg",  obj: "Definición",           col: "elias"   },
 ];

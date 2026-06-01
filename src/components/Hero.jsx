@@ -189,9 +189,27 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr !important; grid-template-rows: auto 1fr; }
-          .hero-media { min-height: 60vw !important; max-height: 280px; order: -1; }
-          .hero-media img, .hero-media video { object-position: center 20% !important; }
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: auto auto;
+          }
+          .hero-media {
+            order: -1;
+            max-height: 240px;
+            overflow: hidden;
+          }
+          .hero-media > div {
+            max-width: 100% !important;
+            padding: 0 !important;
+          }
+          .hero-media img, .hero-media video {
+            aspect-ratio: 16/9 !important;
+            object-position: center 20% !important;
+            max-height: 240px;
+          }
+          .hero-media > div > div:last-child {
+            display: none !important;
+          }
         }
       `}</style>
     </section>
