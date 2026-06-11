@@ -140,7 +140,7 @@ export default function Hero() {
             */}
             <img src="/fotos/hero.jpg" alt="Santiago Nievas"
               style={{ width: "100%", display: "block", objectFit: "cover",
-                objectPosition: "center top", aspectRatio: "9/16",
+                objectPosition: "center 30%", aspectRatio: "9/16",
                 filter: "grayscale(15%) contrast(1.05)" }} />
 
             <div style={{ position: "absolute", inset: 0,
