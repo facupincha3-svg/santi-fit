@@ -10,6 +10,7 @@ import FAQ            from "./components/FAQ";
 import CTAFinal       from "./components/CTAFinal";
 import Footer         from "./components/Footer";
 import WhatsAppFloat  from "./components/WhatsAppFloat";
+import VideoHook      from "./components/VideoHook";
 
 const GlobalStyles = () => (
   <style>{`
@@ -79,6 +80,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <VideoHook />
         <Transformaciones />
         <PorQueFunciona />
         <ComoTrabajamos />
