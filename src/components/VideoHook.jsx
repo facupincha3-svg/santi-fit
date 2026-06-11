@@ -9,30 +9,50 @@ export default function VideoHook() {
     const video = videoRef.current;
     if (!video) return;
 
+    const tryPlayWithSound = () => {
+      video.muted = false;
+      video.play().then(() => {
+        setMuted(false);
+        setStarted(true);
+      }).catch(() => {
+        video.muted = true;
+        setMuted(true);
+        video.play().catch(() => {});
+        setStarted(true);
+      });
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.muted = false;
-          video.play().then(() => {
-            setMuted(false);
-            setStarted(true);
-          }).catch(() => {
-            video.muted = true;
-            setMuted(true);
-            video.play().catch(() => {});
-            setStarted(true);
-          });
+          tryPlayWithSound();
         } else {
           video.pause();
           video.muted = true;
           setMuted(true);
+          setStarted(false);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
+    const unlock = () => {
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("scroll", unlock);
+    };
+
+    document.addEventListener("touchstart", unlock, { passive: true });
+    document.addEventListener("click", unlock);
+    document.addEventListener("scroll", unlock, { passive: true });
+
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("scroll", unlock);
+    };
   }, []);
 
   const toggleMute = () => {
