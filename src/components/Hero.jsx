@@ -212,7 +212,7 @@ export default function Hero() {
             min-height: 420px;
             aspect-ratio: unset !important;
             object-fit: cover !important;
-            object-position: center 30% !important;
+            object-position: center 15% !important;
           }
           .hero-scroll { display: none !important; }
         }
