@@ -47,10 +47,13 @@ export default function Navbar() {
           transition: "background 0.4s, border 0.4s" }}>
 
         <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 4 }}>
-          <span className="display" style={{ fontSize: 19, fontWeight: 500,
-            letterSpacing: "0.04em", color: logoC, transition: "color 0.4s" }}>SANTI NIEVAS</span>
-          <span style={{ fontSize: 11, color: "var(--amber)", letterSpacing: "0.2em", marginLeft: 2 }}>· FIT</span>
+          style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 0 }}>
+          <span style={{
+            fontFamily: '"Instrument Serif", serif',
+            fontStyle: "italic",
+            fontSize: 20, fontWeight: 700, letterSpacing: "0.01em",
+            color: logoC, transition: "color 0.4s",
+          }}>SANTINIEVAS<span style={{ color: "#e8a830" }}>.FIT</span></span>
         </a>
 
         <nav className="hide-mob" style={{ display: "flex", gap: 36 }}>
