@@ -12,7 +12,7 @@ const PLANS = [
       { label: "Seguimiento semanal",     val: false },
       { label: "Ajustes del plan",        val: false },
       { label: "Soporte por WhatsApp",    val: false },
-      { label: "Guía nutricional",        val: false },
+      { label: "Orientación alimentaria",  val: false },
       { label: "Prioridad en respuestas", val: false },
     ],
   },
@@ -29,7 +29,7 @@ const PLANS = [
       { label: "Seguimiento semanal",     val: true  },
       { label: "Ajustes del plan",        val: true  },
       { label: "Soporte por WhatsApp",    val: true  },
-      { label: "Guía nutricional",        val: true  },
+      { label: "Orientación alimentaria",  val: true  },
       { label: "Prioridad en respuestas", val: false },
     ],
   },
@@ -45,8 +45,8 @@ const PLANS = [
       { label: "Seguimiento semanal",     val: true },
       { label: "Ajustes del plan",        val: true },
       { label: "Soporte por WhatsApp",    val: true },
-      { label: "Guía nutricional",        val: true },
-      { label: "Prioridad en respuestas", val: true },
+      { label: "Plan nutricional por nutricionista", val: true },
+      { label: "Prioridad en respuestas",            val: true },
     ],
   },
 ];
@@ -56,7 +56,8 @@ const COMPARE_ROWS = [
   "Seguimiento semanal",
   "Ajustes del plan",
   "Soporte por WhatsApp",
-  "Guía nutricional",
+  "Orientación alimentaria",
+  "Plan nutricional por nutricionista",
   "Prioridad en respuestas",
 ];
 
