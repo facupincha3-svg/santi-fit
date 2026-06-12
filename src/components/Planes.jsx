@@ -59,11 +59,13 @@ const PLANS = [
 
 const COMPARE_ROWS = [
   "Rutina personalizada",
-  "Seguimiento semanal",
-  "Ajustes del plan",
+  "Seguimiento semanal y ajustes del plan",
   "Soporte por WhatsApp",
+  "Corrección técnica por video",
   "Orientación alimentaria",
   "Plan nutricional por nutricionista",
+  "Ajustes nutricionales periódicos",
+  "Coordinación entrenamiento + nutrición",
   "Prioridad en respuestas",
 ];
 
