@@ -296,7 +296,7 @@ export default function Planes() {
         <FadeIn delay={0.4}>
           <p style={{ textAlign: "center", color: "var(--gray3)", fontSize: 11, fontWeight: 300,
             marginTop: 40, maxWidth: 560, margin: "40px auto 0", lineHeight: 1.6, fontStyle: "italic" }}>
-            El servicio no reemplaza asesoramiento médico o nutricional clínico.
+            El servicio no reemplaza asesoramiento médico profesional.
           </p>
         </FadeIn>
 
