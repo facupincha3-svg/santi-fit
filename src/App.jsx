@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import Navbar         from "./components/Navbar";
 import Hero           from "./components/Hero";
 import Transformaciones from "./components/Transformaciones";
@@ -92,6 +93,7 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <Analytics />
     </>
   );
 }
